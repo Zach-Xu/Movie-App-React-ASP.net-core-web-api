@@ -1,0 +1,105 @@
+.detail-container {
+    max-width: 1100px;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    padding: 0 2rem;
+}
+
+.movie-detail {
+    display: flex;
+}
+
+.detail-container ul {
+    position: relative;
+    list-style: none;
+    margin-left: 2rem;
+}
+
+.movie-detail ul li {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.4rem;
+}
+
+.detail-container ul .data span:first-child {
+    width: 150px;
+}
+
+
+.detail-container img {
+    width: 220px;
+    height: 300px;
+}
+
+.detail-container .title {
+    font-size: 32px;
+}
+
+.movie-detail ul li:last-child {
+    position: absolute;
+    display: flex;
+    bottom: 0;
+}
+
+.detail-container .download,
+.detail-container .submit,
+.detail-container .edit {
+    padding: 0.4rem 1rem;
+    margin-top: 0.8rem;
+    color: #000;
+    background: #e9bd6c;
+    border: 1px solid #e9bd6c;
+    display: block;
+    font-size: 1rem;
+    line-height: 0.85rem;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.header-comment {
+    margin-top: 0.8rem;
+    margin-bottom: 0.4rem;
+    color: #fff;
+}
+
+.form-comment textarea {
+    width: 100%;
+    padding: 0.4rem;
+}
+
+.detail-container .comments {
+    margin-top: 0.8rem;
+}
+
+.detail-container .comments ul {
+    margin-left: 0;
+    color: #fff;
+}
+
+.comment {
+    position: relative;
+}
+
+.comment::after {
+    content: '';
+    display: block;
+    margin-top: 1rem;
+    border-bottom: 1px solid black;
+}
+
+.comment p {
+    margin-top: 0.6rem;
+}
+
+.comment div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment .edit {
+    position: absolute;
+    right: 0;
+    bottom: 1rem;
+}
