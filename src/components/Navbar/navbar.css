@@ -13,6 +13,7 @@ header {
     font-size: 1rem;
     padding: 0.5rem 1rem;
     color: #fff;
+    margin-right: 20px;
 }
 
 .search::placeholder {
@@ -22,4 +23,25 @@ header {
 .search:focus {
     outline: none;
     background-color: #22254b;
+}
+
+.header-navbar ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.header-navbar ul li {
+    margin: 0 20px;
+}
+
+.header-navbar ul li:last-of-type {
+    cursor: pointer;
+    color: #fff;
+}
+
+.header-navbar ul li a,
+.header-navbar ul li a::after {
+    text-decoration: none;
+    color: #fff;
 }

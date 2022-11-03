@@ -1,0 +1,31 @@
+.mymovies-container {
+    color: #fff;
+    max-width: 1100px;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    padding: 0 2rem;
+}
+
+.mymovies-container h2 {
+    text-align: center;
+}
+
+.MuiBox-root .form-control {
+    display: flex;
+    margin-top: 10px;
+}
+
+.MuiBox-root .form-control span {
+    width: 150px;
+}
+
+.MuiBox-root .form-control input,
+.MuiBox-root .form-control textarea {
+    padding: 3px 5px;
+    border: 1px solid black;
+}
+
+.MuiBox-root h2 {
+    text-align: center;
+}
