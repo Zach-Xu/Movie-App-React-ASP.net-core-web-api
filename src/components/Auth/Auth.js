@@ -4,6 +4,7 @@ import { AuthContext } from '../../App'
 import './auth.css'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
+import { baseURL } from '../../config/env'
 
 export default function Auth() {
 
@@ -47,7 +48,7 @@ export default function Auth() {
     const login = async (e) => {
         e.preventDefault()
         try {
-            const result = await axios.post('http://localhost:5240/api/Auth/login', {
+            const result = await axios.post(`${baseURL}/api/Auth/login`, {
                 ...loginInfo
             })
             // login succeeded
@@ -68,7 +69,7 @@ export default function Auth() {
     const signup = async (e) => {
         e.preventDefault()
         try {
-            const result = await axios.post('http://localhost:5240/api/Auth/signup', {
+            const result = await axios.post(`${baseURL}/api/Auth/signup`, {
                 ...signupInfo
             })
             console.log(result);

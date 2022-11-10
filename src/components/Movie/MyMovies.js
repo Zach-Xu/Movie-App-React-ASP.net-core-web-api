@@ -20,7 +20,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { green } from '@mui/material/colors';
 import { AuthContext } from '../../App';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { baseURL } from '../../config/env';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -74,7 +74,7 @@ export default function MyMovies() {
 
     const getMyMovies = async () => {
         if (auth.id !== undefined) {
-            const result = await axios.get(`http://localhost:5240/api/Movie/uploader/${auth.id}`)
+            const result = await axios.get(`${baseURL}/api/Movie/uploader/${auth.id}`)
             setRows(result.data)
         }
     }
@@ -122,7 +122,7 @@ export default function MyMovies() {
     const deleteMovie = async (movie) => {
         console.log(movie);
         try {
-            await axios.delete('http://localhost:5240/api/Movie', {
+            await axios.delete(`${baseURL}/api/Movie`, {
                 data: {
                     movieID: movie.movieID,
                     uploaderID: auth.id,
@@ -192,7 +192,7 @@ export default function MyMovies() {
         console.log('formdata', formData)
 
         try {
-            const res = await axios.post('http://localhost:5240/api/Movie', formData)
+            const res = await axios.post(`${baseURL}/api/Movie`, formData)
             if (res.status === 200 || res.status === 204) {
                 setSuccess(true);
                 setLoading(false);
@@ -228,7 +228,7 @@ export default function MyMovies() {
         }
 
         try {
-            const res = await axios.patch('http://localhost:5240/api/Movie', movieToBeEdit)
+            const res = await axios.patch(`${baseURL}/api/Movie`, movieToBeEdit)
             if (res.status === 200 || res.status === 204) {
                 toast.success('Movie updated', {
                     position: toast.POSITION.TOP_CENTER

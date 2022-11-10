@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './movielist.css'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { baseURL } from '../../config/env'
 
 export default function MovieList({ movies, setMovies }) {
 
@@ -17,7 +18,7 @@ export default function MovieList({ movies, setMovies }) {
     }, [])
 
     const getMovieList = async () => {
-        const result = await axios.get('http://localhost:5240/api/Movie')
+        const result = await axios.get(`${baseURL}/api/Movie`)
         setMovies(result.data)
     }
 

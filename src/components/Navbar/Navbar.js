@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../App'
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios'
+import { baseURL } from '../../config/env';
 
 export default function Navbar({ setMovies }) {
 
@@ -24,7 +25,7 @@ export default function Navbar({ setMovies }) {
         e.preventDefault()
         try {
             if (keyword.trim() === '') {
-                const result = await axios.get(`http://localhost:5240/api/Movie`)
+                const result = await axios.get(`${baseURL}/api/Movie`)
                 setMovies(result.data)
                 navigate('/movielist')
                 return
@@ -36,13 +37,13 @@ export default function Navbar({ setMovies }) {
                             position: toast.POSITION.TOP_CENTER
                         })
                     } else {
-                        const result = await axios.get(`http://localhost:5240/api/Movie/ratingabove?rating=${keyword}`)
+                        const result = await axios.get(`${baseURL}/api/Movie/ratingabove?rating=${keyword}`)
                         setMovies(result.data)
                         navigate('/movielist')
                     }
                     break
                 case 'genre':
-                    const result = await axios.get(`http://localhost:5240/api/Movie/genre?genre=${keyword}`)
+                    const result = await axios.get(`${baseURL}/api/Movie/genre?genre=${keyword}`)
                     setMovies(result.data)
                     navigate('/movielist')
                     break

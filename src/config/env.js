@@ -1,0 +1,1 @@
+export const baseURL = 'http://lab3server-zhen.eba-t2zbjfeg.ca-central-1.elasticbeanstalk.com'

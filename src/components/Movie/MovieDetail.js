@@ -10,7 +10,7 @@ import { AuthContext } from '../../App';
 import { toast, ToastContainer } from 'react-toastify';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-
+import { baseURL } from '../../config/env';
 
 const labels = {
     0.5: 1,
@@ -75,7 +75,7 @@ export default function MovieDetail({ movies, setMovies }) {
 
     const getUploader = async () => {
         try {
-            const result = await axios.get(`http://localhost:5240/api/Auth/user/${movie.uploaderID}`)
+            const result = await axios.get(`${baseURL}/api/Auth/user/${movie.uploaderID}`)
             setUploader(result.data)
         } catch (error) {
             toast.error('Fail to get uploader', {
@@ -88,7 +88,7 @@ export default function MovieDetail({ movies, setMovies }) {
     const getMovieComments = async () => {
         if (movie !== null) {
             try {
-                const result = await axios.get(`http://localhost:5240/api/Comment?movieID=${movie.movieID}`)
+                const result = await axios.get(`${baseURL}/api/Comment?movieID=${movie.movieID}`)
                 setComments(result.data)
             } catch (error) {
                 console.log(error);
@@ -102,7 +102,7 @@ export default function MovieDetail({ movies, setMovies }) {
     const getMyRating = async () => {
         if (auth.id !== undefined) {
             try {
-                const result = await axios.get(`http://localhost:5240/api/Rating?movieID=${movie.movieID}&userID=${auth.id}`)
+                const result = await axios.get(`${baseURL}/api/Rating?movieID=${movie.movieID}&userID=${auth.id}`)
                 if (result.data !== '') {
                     setMyRating(result.data.myRating)
                     setValue(result.data.myRating / 2)
@@ -126,7 +126,7 @@ export default function MovieDetail({ movies, setMovies }) {
         const result = await axios({
             method: 'get',
             responseType: 'arraybuffer',
-            url: `http://localhost:5240/api/Movie/download?s3URL=${filename}`
+            url: `${baseURL}/api/Movie/download?s3URL=${filename}`
         })
 
         const blob = new Blob([result.data], {
@@ -140,7 +140,7 @@ export default function MovieDetail({ movies, setMovies }) {
     const submitComment = async (e) => {
         e.preventDefault()
         try {
-            await axios.post('http://localhost:5240/api/Comment', {
+            await axios.post(`${baseURL}/api/Comment`, {
                 movieID: movie.movieID,
                 userID: auth.id,
                 createDate: Date.now(),
@@ -170,7 +170,7 @@ export default function MovieDetail({ movies, setMovies }) {
     const updateComment = async () => {
         setOpenEdit(false)
         try {
-            await axios.put('http://localhost:5240/api/Comment', {
+            await axios.put(`${baseURL}/api/Comment`, {
                 commentID: commentToBeEdit.commentID,
                 userID: commentToBeEdit.userID,
                 content: commentToBeEdit.content
@@ -192,7 +192,7 @@ export default function MovieDetail({ movies, setMovies }) {
         // actual rating is rating *2
         rating *= 2
         try {
-            await axios.post(`http://localhost:5240/api/Rating`, {
+            await axios.post(`${baseURL}/api/Rating`, {
                 movieID: movie.movieID,
                 userID: auth.id,
                 myRating: rating
@@ -204,9 +204,9 @@ export default function MovieDetail({ movies, setMovies }) {
                 position: toast.POSITION.BOTTOM_CENTER
             })
             // update the average rating
-            const result = await axios.get(`http://localhost:5240/api/Movie/movieID/${movie.movieID}`)
+            const result = await axios.get(`${baseURL}/api/Movie/movieID/${movie.movieID}`)
             setMovie(result.data)
-            const res = await axios.get('http://localhost:5240/api/Movie')
+            const res = await axios.get(`${baseURL}/api/Movie`)
             setMovies(res.data)
         } catch (error) {
             console.log(error);
