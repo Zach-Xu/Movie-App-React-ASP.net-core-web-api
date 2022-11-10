@@ -1,1 +1,1 @@
-export const baseURL = 'http://lab3server-zhen.eba-t2zbjfeg.ca-central-1.elasticbeanstalk.com'
+export const baseURL = 'https://maritvzl2h.execute-api.ca-central-1.amazonaws.com'
