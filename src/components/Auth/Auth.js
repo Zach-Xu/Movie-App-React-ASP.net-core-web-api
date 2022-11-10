@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState, useContext, Fragment } from 'react'
+import { AuthContext } from '../../App'
 import './auth.css'
+import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Auth() {
 
+    const [auth, setAuth] = useContext(AuthContext)
+
     const [signupInfo, setSignupInfo] = useState({
         email: '',
-        password: ''
+        password: '',
+        firstName: '',
+        lastName: ''
     })
 
     const [loginInfo, setLoginInfo] = useState({
@@ -34,12 +42,52 @@ export default function Auth() {
         })
     }, [])
 
-    const login = e => {
+    const navigate = useNavigate()
+
+    const login = async (e) => {
         e.preventDefault()
+        try {
+            const result = await axios.post('http://localhost:5240/api/Auth/login', {
+                ...loginInfo
+            })
+            // login succeeded
+            if (result.status == 200) {
+                setAuth(result.data)
+                localStorage.setItem('authUser', JSON.stringify(result.data))
+                navigate('/movielist')
+            }
+        } catch (error) {
+            // login fail
+            setAuth(null)
+            toast.error('Wrong Credentials !', {
+                position: toast.POSITION.TOP_CENTER
+            })
+        }
     }
 
-    const signup = e => {
+    const signup = async (e) => {
         e.preventDefault()
+        try {
+            const result = await axios.post('http://localhost:5240/api/Auth/signup', {
+                ...signupInfo
+            })
+            console.log(result);
+            // sign up succeeded
+            if (result.status == 201) {
+                setAuth(result.data)
+                navigate('/movielist')
+            }
+        } catch (error) {
+            setAuth(null)
+            toast.error('Email alreay exists !', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            })
+        }
     }
 
     const onLoginInfoChange = e => {
@@ -67,15 +115,17 @@ export default function Auth() {
                 <div className="form">
                     <form className="form-login" onSubmit={login}>
                         <h1>Log in</h1>
-                        <input type="text" placeholder="Email" name="email" value={loginInfo.email} onChange={onLoginInfoChange} />
-                        <input type="password" placeholder="Password" name="password" value={loginInfo.password} onChange={onLoginInfoChange} />
+                        <input type="email" placeholder="Email" name="email" value={loginInfo.email} onChange={onLoginInfoChange} required />
+                        <input type="password" placeholder="Password" name="password" value={loginInfo.password} onChange={onLoginInfoChange} required />
                         <button type="submit">Login</button>
                     </form>
 
                     <form className="form-signup hide" onSubmit={signup}>
                         <h1>Sign up</h1>
-                        <input type="text" placeholder="Email" name="email" value={signupInfo.email} onChange={onSignupInfoChange} />
-                        <input type="password" placeholder="Password" name="password" value={signupInfo.password} onChange={onSignupInfoChange} />
+                        <input type="text" placeholder="First Name" name="firstName" value={signupInfo.firstName} onChange={onSignupInfoChange} required />
+                        <input type="text" placeholder="Last Name" name="lastName" value={signupInfo.lastName} onChange={onSignupInfoChange} required />
+                        <input type="email" placeholder="Email" name="email" value={signupInfo.email} onChange={onSignupInfoChange} required />
+                        <input type="password" placeholder="Password" name="password" value={signupInfo.password} onChange={onSignupInfoChange} required />
                         <button type="submit">Sign up</button>
 
                     </form>
@@ -86,6 +136,18 @@ export default function Auth() {
                     <button className="btn btn-to-signup">Sign up</button>
                 </div>
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light" />
         </div>
+
     )
 }

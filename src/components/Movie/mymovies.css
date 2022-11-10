@@ -21,10 +21,21 @@
 }
 
 .MuiBox-root .form-control input,
-.MuiBox-root .form-control textarea {
+.MuiBox-root .form-control textarea,
+.MuiBox-root .form-control select {
     padding: 3px 5px;
     border: 1px solid black;
 }
+
+.MuiBox-root .img-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.MuiBox-root #img-preview {
+    width: 200px;
+}
+
 
 .MuiBox-root h2 {
     text-align: center;

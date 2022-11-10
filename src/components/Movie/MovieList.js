@@ -1,25 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './movielist.css'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-export default function MovieList() {
+export default function MovieList({ movies, setMovies }) {
 
-    const [movies, setMovies] = useState([
-        {
-            id: 1,
-            imgPath: 'https://image.tmdb.org/t/p/w1280/aGBuiirBIQ7o64FmJxO53eYDuro.jpg',
-            title: 'Jeepers Creepers: Reborn',
-            genre: 'Fiction',
-            averageRate: 8.4,
-            overview: 'Forced to travel with her boyfriend to a horror festival, Laine begins to experience disturbing visions associated with the urban legend of The Creeper.As the festival arrives and the blood- soaked entertainment builds to a frenzy, she becomes the center of it while something unearthly has been summoned.'
+    useEffect(() => {
+        if (!localStorage.getItem('authUser')) {
+            return navigate('/')
         }
-    ])
+
+
+        if (movies.length === 0) {
+            getMovieList()
+        }
+    }, [])
+
+    const getMovieList = async () => {
+        const result = await axios.get('http://localhost:5240/api/Movie')
+        setMovies(result.data)
+    }
 
     const navigate = useNavigate()
 
-    const viewDetail = (id) => {
+    const viewDetail = (movie) => {
         // to movie detail page
-        navigate('/moviedetail')
+        navigate('/moviedetail', { state: movie })
     }
 
     return (
@@ -27,11 +33,14 @@ export default function MovieList() {
             <main id="movies">
                 {
                     movies.length > 0 && movies.map(movie => (
-                        <div className="movie" key={movie.id} onClick={() => viewDetail(movie.id)}>
-                            <img src={movie.imgPath} alt={movie.title} />
+                        <div className="movie" key={movie.movieID} onClick={() => viewDetail(movie)}>
+                            <img src={movie.s3ImgPath} alt={movie.title} />
                             <div className="movie-info">
                                 <h3>{movie.title}</h3>
-                                <span className='orange'>{movie.averageRate}</span>
+                                <div>
+                                    <span>{movie.genre}</span>
+                                    <span className='orange'>{movie.avgRating === 0 ? 'No Rating yet' : movie.avgRating}</span>
+                                </div>
                             </div>
                             <div className="overview">
                                 <h3>Overview</h3>

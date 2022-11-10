@@ -5,9 +5,35 @@ header {
     background-color: #373b69;
 }
 
-.search {
+.header-navbar #form {
     background-color: transparent;
     border: 2px solid #22254b;
+    border-radius: 50px;
+}
+
+.header-navbar select {
+    background-color: transparent;
+    border: 0;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    margin-right: 10px;
+}
+
+select:active,
+select:focus {
+    outline: 0;
+}
+
+.header-navbar option {
+    background-color: transparent;
+    color: #22254b;
+}
+
+.search {
+    background-color: transparent;
+    outline: 0;
+    border: 0;
     border-radius: 50px;
     font-family: inherit;
     font-size: 1rem;
